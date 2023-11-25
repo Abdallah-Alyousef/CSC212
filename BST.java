@@ -97,18 +97,24 @@ private  boolean traverseRightSubtree(BSTNode<T> node) {
 }
 
 
- public void printBST() {
-    printInOrder(root);
-}
+public void printBST() {
+  if (root == null) {
+      return;
+  }
 
-private void printInOrder(BSTNode<T> node) {
-    if (node == null) {
-        return;
-    }
+  Stack<BSTNode<T>> stack = new Stack<BSTNode<T>>();
+  BSTNode<T> current = root;
 
-    printInOrder(node.left);  // Recursively print the left subtree
-    ((Contact)node.data).toString();  // Print the current node's data
-    printInOrder(node.right);  // Recursively print the right subtree
+  while (current != null || !stack.isEmpty()) {
+      while (current != null) {
+          stack.push(current);
+          current = current.left;
+      }
+
+      current = stack.pop();
+      ((Contact)current.data).printContact();
+      current = current.right;
+  }
 }
 
   
