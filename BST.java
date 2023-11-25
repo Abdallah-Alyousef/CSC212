@@ -1,6 +1,9 @@
-public class BST<T> {
+import java.util.Stack;
+
+public class BST<T> implements Comparable<T>{
   BSTNode<T> root , current;
   Boolean a;
+  private String contactName;
   public BST() {
     root = current = null;
   }
@@ -20,8 +23,103 @@ public class BST<T> {
     return current.data;
   }
 
+  // public void printTree() {
+  //   inOrder(root);
+  // }
+  // private void inOrder(BSTNode<T> p) {
+  //   if(p!=null) {
+  //     inOrder(p.right);
+  //     System.out.println(p.data);
+  //     inOrder(p.left);
+  //   }
+  // }
+  // private Contact inOrder(BSTNode<T> p) {
+  //   if(p!=null) {
 
-  public boolean findKey(int tkey) {
+  //   }
+  
+
+  public boolean traverseBST() {
+    if (current == null) {
+        return true;
+    }
+
+    boolean foundLast = traverseLeftSubtree(current.left);  // Recursively traverse left subtree
+    if (foundLast) {
+        System.out.print(current.data + " ");  // Process current node
+
+        // Check if the current node is the last node in the right subtree
+        if (current.right == null) {
+            return true;
+        }
+
+        current = current.right;  // Move to the next node in the right subtree
+        return false;
+    }
+
+    return false;
+}
+
+private  boolean traverseLeftSubtree(BSTNode<T> node) {
+    if (node == null) {
+        return true;
+    }
+
+    boolean foundLast = traverseLeftSubtree(node.left);  // Recursively traverse left subtree
+    if (foundLast) {
+        System.out.print(node.data + " ");  // Process current node
+
+        // Check if the current node is the last node in the right subtree
+        if (node.right == null) {
+            return traverseRightSubtree(current.right);  // Recursively traverse right subtree
+        }
+    }
+
+    return false;
+}
+
+private  boolean traverseRightSubtree(BSTNode<T> node) {
+    if (node == null) {
+        return true;
+    }
+
+    boolean foundLast = traverseLeftSubtree(node.left);  // Recursively traverse left subtree
+    if (foundLast) {
+        System.out.print(node.data + " ");  // Process current node
+
+        // Check if the current node is the last node in the right subtree
+        if (node.right == null) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
+ public void printBST() {
+    printInOrder(root);
+}
+
+private void printInOrder(BSTNode<T> node) {
+    if (node == null) {
+        return;
+    }
+
+    printInOrder(node.left);  // Recursively print the left subtree
+    ((Contact)node.data).toString();  // Print the current node's data
+    printInOrder(node.right);  // Recursively print the right subtree
+}
+
+  
+  
+
+  public void findRoot() {
+      current = root;
+  }
+
+  
+  public boolean findPhone(String tkey) {
     BSTNode<T> p = root,q = root;
 
     //Cant find a key in a empty tree
@@ -34,11 +132,11 @@ public class BST<T> {
     while(p != null) {
       q=p;
       //Found the key
-      if(p.key == tkey) {
+      if(((Contact) p.data).getPhoneNumber().equalsIgnoreCase(tkey)) {
         current = p;
         return true;
       }
-      else if(tkey < p.key) {
+      else if(tkey.compareTo(((Contact) p.data).getPhoneNumber()) < 0) {
         p = p.left;
       }
       else {
@@ -48,7 +146,121 @@ public class BST<T> {
     current = q;
     return false;
   }
-  public boolean insert(int k , T val) {
+
+  public boolean findEmailAddress(String tkey) {
+    BSTNode<T> p = root,q = root;
+
+    //Cant find a key in a empty tree
+    if(empty()) {
+      return false;
+    }
+
+    //Q moves 1 step behind P 
+
+    while(p != null) {
+      q=p;
+      //Found the key
+      if(((Contact) p.data).getEmailAddress().equalsIgnoreCase(tkey)) {
+        current = p;
+        return true;
+      }
+      else if(tkey.compareTo(((Contact) p.data).getEmailAddress()) < 0) {
+        p = p.left;
+      }
+      else {
+        p = p.right;
+      }
+    }
+    current = q;
+    return false;
+  }
+  public boolean findAddress(String tkey) {
+    BSTNode<T> p = root,q = root;
+
+    //Cant find a key in a empty tree
+    if(empty()) {
+      return false;
+    }
+
+    //Q moves 1 step behind P 
+
+    while(p != null) {
+      q=p;
+      //Found the key
+      if(((Contact) p.data).getAddress().equalsIgnoreCase(tkey)) {
+        current = p;
+        return true;
+      }
+      else if(tkey.compareTo(((Contact) p.data).getAddress()) < 0) {
+        p = p.left;
+      }
+      else {
+        p = p.right;
+      }
+    }
+    current = q;
+    return false;
+  }
+  public boolean findBirthday(String tkey) {
+    BSTNode<T> p = root,q = root;
+
+    //Cant find a key in a empty tree
+    if(empty()) {
+      return false;
+    }
+
+    //Q moves 1 step behind P 
+
+    while(p != null) {
+      q=p;
+      //Found the key
+      if(((Contact) p.data).getBirthday().equalsIgnoreCase(tkey)) {
+        current = p;
+        return true;
+      }
+      else if(tkey.compareTo(((Contact) p.data).getBirthday()) < 0) {
+        p = p.left;
+      }
+      else {
+        p = p.right;
+      }
+    }
+    current = q;
+    return false;
+  }
+
+
+  public boolean findKey(String tkey) {
+    BSTNode<T> p = root,q = root;
+
+    //Cant find a key in a empty tree
+    if(empty()) {
+      return false;
+    }
+
+    //Q moves 1 step behind P 
+
+    while(p != null) {
+      q=p;
+      //Found the key
+      if(p.key.equalsIgnoreCase(tkey)) {
+        current = p;
+        return true;
+      }
+      else if(tkey.compareTo(p.key) < 0) {
+        p = p.left;
+      }
+      else {
+        p = p.right;
+      }
+    }
+    current = q;
+    return false;
+  }
+
+
+
+  public boolean insert(String k , T val) {
     BSTNode<T> p , q=current;
     //if the nodes exists then we wont add
     if(findKey(k)) { 
@@ -61,7 +273,7 @@ public class BST<T> {
       return true;
     }
     else {
-      if(k < current.key) {
+      if(k.compareTo(current.key) < 0) {
         current.left = p;
       }
       else {
@@ -81,49 +293,76 @@ public class BST<T> {
       return p;
   }
   
-  public boolean update(int key , T data) {
-      remove_key(current.key);
-      return insert(key, data);
-  }
+  // public boolean update(int key , T data) {
+  //     remove_key(current.key);
+  //     return insert(key, data);
+  // }
 
-  private BSTNode<T> remove_aux(int key , BSTNode<T> p , BooleanWrapper flag) {
-      BSTNode<T> q , child = null;
-      if(p == null) {
-        return null;
-      }
-      if(key < p.key) {
-        p.left = remove_aux(key, p.left, flag);
-      }
-      else if(key > p.key) {
-        p.right = remove_aux(key, p.right, flag);
-      }
-      else {
-        flag.set(true);
-        if(p.left != null && p.right != null) {
-          q = find_min(p.right);
-          p.key = q.key;
-          p.data = q.data;
-          p.right = remove_aux(q.key, p.right, flag);
+  // private BSTNode<T> remove_aux(int key , BSTNode<T> p , BooleanWrapper flag) {
+  //     BSTNode<T> q , child = null;
+  //     if(p == null) {
+  //       return null;
+  //     }
+  //     if(key < p.key) {
+  //       p.left = remove_aux(key, p.left, flag);
+  //     }
+  //     else if(key > p.key) {
+  //       p.right = remove_aux(key, p.right, flag);
+  //     }
+  //     else {
+  //       flag.set(true);
+  //       if(p.left != null && p.right != null) {
+  //         q = find_min(p.right);
+  //         p.key = q.key;
+  //         p.data = q.data;
+  //         p.right = remove_aux(q.key, p.right, flag);
   
-        }
-        else {
-          if(p.right == null) {
-              child = p.left;
-          }
-          else if(p.left == null) {
-              child = p.right;
-          }
-          return child;
-        }
-      }
-      return p;
+  //       }
+  //       else {
+  //         if(p.right == null) {
+  //             child = p.left;
+  //         }
+  //         else if(p.left == null) {
+  //             child = p.right;
+  //         }
+  //         return child;
+  //       }
+  //     }
+  //     return p;
+  // }
+
+  // public boolean remove_key(int tkey) {
+  //     BooleanWrapper removed = new BooleanWrapper(false);
+  //     BSTNode<T> p;
+  //     p = remove_aux(tkey , root , removed);
+  //     current = root = p;
+  //     return removed.get();
+  // }
+
+  public int compareTo(String c) {
+		return contactName.compareTo(c);
+	}
+
+	public int compareTo(Contact c) {
+		return contactName.compareTo(c.contactName);
+	}
+
+  @Override
+  public int compareTo(Object o) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'compareTo'");
   }
 
-  public boolean remove_key(int tkey) {
-      BooleanWrapper removed = new BooleanWrapper(false);
-      BSTNode<T> p;
-      p = remove_aux(tkey , root , removed);
-      current = root = p;
-      return removed.get();
-  }
+
+//   public BSTNode<T> search(BSTNode<T> root, Contact data) {
+//     if (root == null || root.data == data) {
+//         return root;
+//     }
+
+//     if (data < root.data) {
+//         return search(root.left, data);
+//     } else {
+//         return search(root.right, data);
+//     }
+// }
 }

@@ -1,16 +1,16 @@
 public class BSTNode<T> {
   
-  public int key;
+  public String key; //Possibly change of implementation (KEY) --> Only object of contact using compare to for searching...
   public T data;
   public BSTNode<T> left , right;
 
-  public BSTNode(int k , T val) {
+  public BSTNode(String k , T val) {
       key = k;
       data = val;
       left = right = null;
   }
 
-  public BSTNode(int k , T val ,BSTNode<T> l ,BSTNode<T> r) {
+  public BSTNode(String k , T val ,BSTNode<T> l ,BSTNode<T> r) {
       key = k;
       data = val;
       left = l;

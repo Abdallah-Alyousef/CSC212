@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Contact implements Comparable{
+public class Contact implements Comparable<String>{
 
     Scanner kb = new Scanner(System.in);
 
@@ -73,9 +73,7 @@ public class Contact implements Comparable{
 	}
 
     
-    public int compareTo(Object o) {
-        throw new UnsupportedOperationException("Unimplemented method 'compareTo'");
-    }
+
 
     public void printContact(){
 		System.out.println("Name: "+contactName);
@@ -85,6 +83,12 @@ public class Contact implements Comparable{
 		System.out.println("Birthday: "+birthday);
 		System.out.println("Notes: "+notes + "\n");
 	}
+
+  public String toString() {
+    return "Name: "+contactName + "\nPhone Number: "+phoneNumber + "\nEmail Address: "+emailAddress
+     +"\nAddress: "+address+"\nBirthday: "+birthday 
+     +"\nNotes: "+notes + "\n";
+  }
 
 
     //To save the contact information
