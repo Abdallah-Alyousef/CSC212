@@ -5,48 +5,16 @@ public class Phonebook {
 	// LinkedListADT<Contact>  contacts = new LinkedListADT<Contact>(); NEEDS TO BE BST
     BST<Contact> contacts = new BST<Contact>();
 	LinkedListADT<Event>  events = new LinkedListADT<Event>();
-    
-	//For searching the contact in the list "contacts"
-	// public boolean searchName_Phone(Contact c) {
-	// 	if (contacts.empty()) {
-	// 		return false;
-	// 	}
-	// 	contacts.findKey(contacts.root.key); //Find first !
-	// 	//It will go through the list till the last contact and search for the contact by the name or phone number
-	// 	while(contacts) {
-	// 		if (contacts.retrieve().getContactName().equals(c.getContactName()) || contacts.retrieve().getPhoneNumber().equals(c.getPhoneNumber())) {
-	// 			return true;
-	// 		}
-	// 		contacts.findNext();
-	// 	}
-	// 	//For checking the last contact that we stopped at while searching
-	// 	if (contacts.retrieve().getContactName().equals(c.getContactName()) || contacts.retrieve().getPhoneNumber().equals(c.getPhoneNumber())) { 
-	// 		return true;
-	// 	}
-	// 	//If not found at all
-	// 	return false;
-	// }
-
 
     public boolean searchName_Phone(Contact c) {
         if(contacts.empty()) {
             return false;
         }
-        if(contacts.findKey(c.getContactName()) && contacts.findKey(c.getPhoneNumber())) {
+        if(searchName(c.getContactName()) != null || searchPhoneNumber(c.getPhoneNumber()) != null) {
             return true;
         }
         return false;
     }
-    //This method will search a contact by its name
-    // public Contact searchName(String name) {
-    //     if(contacts.empty()) {
-    //         return null;
-    //     }
-    //     if(contacts.findKey(name)) {
-    //         return contacts.retrieve();
-    //     }
-    //     return null;
-    // }
 
     //This method will search a contact by its name
     public Contact searchName(String name) {
@@ -86,104 +54,61 @@ public class Phonebook {
     }
 
 
-	
+    public BST<Contact> searchByFirstName(String firstName) {
+        BST<Contact> tmp = new BST<>();
+    
+        if (contacts.empty()) {
+            return null;
+        }
+        else 
+        searchByFirstNameRecursive(contacts.findRoot(), firstName, tmp);
+    
+        if(tmp.empty()) {
+            return null;
+        }
 
-	//this method will return a list of contacts that share the first name, to print them
-	// public LinkedListADT<Contact> printByFirstName(String firstName) {
-	// 	LinkedListADT<Contact> l = new LinkedListADT<Contact>();
-
-	// 	if(contacts.empty()) { 
-	// 		return null;
-	// 	}
-	// 	contacts.findFirst();
-	// 	//It will go through the list till the last contact and search for the contact by the name or phone number
-	// 	while(!contacts.last()) {
-	// 		String [] a = (contacts.retrieve().getContactName()).split("\\s"); //for spliting the first name from the last name
-	// 		if (a[0].equalsIgnoreCase(firstName)) {
-	// 			l.addSorted(contacts.retrieve());
-	// 		}
-	// 		contacts.findNext();
-	// 	}
-	
-	// 	String [] b = (contacts.retrieve().getContactName()).split("\\s");//for spliting the first name from the last name
-	// 	//For checking the last contact that we stopped at while searching
-	// 	if (b[0].equalsIgnoreCase(firstName)) {
-	// 		l.addSorted(contacts.retrieve());
-	// 	}
-
-	// 	//if we don't find any contact has the first name
-	// 	if(l.empty()) {
-	// 		return null;
-	// 	}
-	// 	return l;
-	// }
-
-	//For adding contact to the list "If it's not exists"
-	// public void addContact(Contact c) {
-	// 	//Checking if the contact is already exsists or not
-	// 	boolean exists = searchName_Phone(c);
-	// 	if(!exists) {
-	// 		// contacts.addSorted(c);
-    //         contacts.insert(k, c);
-	// 	}
-	// }
+        return tmp;
+    }
+    
+    private void searchByFirstNameRecursive(BSTNode<Contact> node, String firstName, BST<Contact> tmp) {
+        if (node != null) {
+            searchByFirstNameRecursive(node.left, firstName, tmp);
+    
+            if (node.data.getFirstName(node.data.getContactName()).equalsIgnoreCase(firstName)) {
+                tmp.insert(node.data.getContactName(), node.data);
+            }
+    
+            searchByFirstNameRecursive(node.right, firstName, tmp);
+        }
+    }
 
 	//For deleting the contact by it's name
-	// public void deleteByName(String name) {
-	// 	if(contacts.empty()) {
-	// 		System.out.print("There is no contacts to delete!\n");
-	// 		return;
-	// 	}
-
-	// 	//This for deleting every event of the contact that you want to delete ..
-	// 	events.findFirst();
-	// 	while(!events.last()) {
-	// 		if(events.retrieve().getContactName().equalsIgnoreCase(name)) {
-	// 			events.deleteCont(events.retrieve());
-	// 		}
-	// 		events.findNext();
-	// 	}
-
-	// 	//Checking last one
-	// 	if(events.retrieve().getContactName().equalsIgnoreCase(name)) {
-	// 			events.deleteCont(events.retrieve());
-	// 		}
-
-	// 	//This for deleting the contact itself ..
-	// 	contacts.findFirst();
-	// 	while(!contacts.last()) {
-	// 		if(contacts.retrieve().getContactName().equalsIgnoreCase(name)) {
-	// 			contacts.deleteCont(contacts.retrieve());
-	// 			System.out.println("Contact deleted ..\n");
-	// 			return;
-	// 		}
-	// 		contacts.findNext();
-	// 	}
-
-	// 	//For checking the last contact ..
-	// 	if (contacts.retrieve().getContactName().equalsIgnoreCase(name)) {
-	// 		contacts.deleteCont(contacts.retrieve());
-	// 		System.out.println("Contact deleted ..\n");
-	// 		return;
-	// 	}
-	// 	else {
-	// 		System.out.println("This contact either doesnt exist or its a invalid input");
-	// 	}
-	// }
-
-    // public BST<Contact> searchByEmail(String email) {
-    //     BST<Contact> tmp = new BST<Contact>();
-
-    //     if(contacts.empty()) {
-    //         return null;
-    //     }
-
-    //     if(contacts.retrieve().getEmailAddress().equalsIgnoreCase(email)) {
-    //         tmp.insert(contacts.retrieve().getContactName(), contacts.retrieve()); 
-    //     } 
+	public void deleteByName(String name) {
+		if(contacts.empty()) {
+			System.out.print("There is no contacts to delete!\n");
+			return;
+		}
+        if(contacts.remove_key(name)) {
+            System.out.println("\nContact Succesfully Deleted..\n");
+        }else {
+            System.out.println("\nThis contact either doesnt exist or its a invalid input\n");
+        }
     
-    //     return tmp;
-    // }
+		// //This for deleting every event of the contact that you want to delete ..
+		events.findFirst();
+		while(!events.last()) {
+			if(events.retrieve().getContactName().equalsIgnoreCase(name)) {
+				events.deleteCont(events.retrieve());
+			}
+			events.findNext();
+		}
+
+		//Checking last one
+		if(events.retrieve().getContactName().equalsIgnoreCase(name)) {
+				events.deleteCont(events.retrieve());
+			}
+
+	}
 
     public BST<Contact> searchByEmail(String email) {
         BST<Contact> tmp = new BST<>();
@@ -268,35 +193,6 @@ public class Phonebook {
         }
     }
 
-	//This will return a linked list that contains contact with the same address we want to search of
-	// public LinkedListADT<Contact> searchByAddress(String address) {
-	// 	LinkedListADT<Contact> tmp = new LinkedListADT<Contact>();
-
-	// 	if(contacts.empty()) {
-	// 		return null;
-	// 	}
-	// 	contacts.findFirst();
-
-	// 	//Go through the List "except the last one" and insert any contact that has the same address that selected
-	// 	while(!contacts.last()) {
-	// 		if(contacts.retrieve().getAddress().equalsIgnoreCase(address)) {
-	// 			tmp.addSorted(contacts.retrieve());
-	// 		}
-	// 		contacts.findNext();
-	// 	}
-
-	// 	//Will check the last one's address
-	// 	if(contacts.retrieve().getAddress().equalsIgnoreCase(address)) {
-	// 		tmp.addSorted(contacts.retrieve());
-	// 	}
-		
-	// 	//if we don't find any contact has the address
-	// 	if(tmp.empty()) {
-	// 		return null;		
-	// 	}
-	// 	return tmp;
-	// }
-
 	//This will print each event and the contacts that share that event (For requirements)
 	public void printEventList(String eventTitle) {
 		if(events.empty()) {
@@ -368,67 +264,67 @@ public class Phonebook {
 	}
 
 	//for checking if there's a conflict between events or not
-	// public boolean conflictEvent(Event event, String name) {
-	// 	Contact contact = searchName(name);
+	public boolean conflictEvent(Event event, String name) {
+		Contact contact = searchName(name);
 
-	// 	//To check if the contact exists 
-	// 	if(contact != null) {
-	// 		// LinkedListADT<Event> eventsContact = contact.get();
-	// 		if(events.empty()) {
-	// 			return false; //There's no events for this contact, so there's no conflict
-	// 		}
-	// 		events.findFirst();
+		//To check if the contact exists 
+		if(contact != null) {
+			// LinkedListADT<Event> eventsContact = contact.get();
+			if(events.empty()) {
+				return false; //There's no events for this contact, so there's no conflict
+			}
+			events.findFirst();
 
-	// 		//going through tha events and check the date and time of each one
-	// 		while(!events.last()) {
-	// 			if(event.getDate().equalsIgnoreCase(events.retrieve().getDate()) && event.getTime().equalsIgnoreCase(events.retrieve().getTime()) && event.getEventTitle().equalsIgnoreCase(events.retrieve().getEventTitle())) {
-	// 				return true; //conflict found!
-	// 			}
-	// 			events.findNext();
-	// 		}
+			//going through tha events and check the date and time of each one
+			while(!events.last()) {
+				if(event.getDate().equalsIgnoreCase(events.retrieve().getDate()) && event.getTime().equalsIgnoreCase(events.retrieve().getTime())) {
+					return true; //conflict found!
+				}
+				events.findNext();
+			}
 
-	// 		//for the last one
-	// 		if(event.getDate().equalsIgnoreCase(events.retrieve().getDate()) && event.getTime().equalsIgnoreCase(events.retrieve().getTime()) && event.getEventTitle().equalsIgnoreCase(events.retrieve().getEventTitle())) {
-	// 			return true; //conflict found!
-	// 		}
+			//for the last one
+			if(event.getDate().equalsIgnoreCase(events.retrieve().getDate()) && event.getTime().equalsIgnoreCase(events.retrieve().getTime())) {
+				return true; //conflict found!
+			}
 
-	// 		//if there's no conflict at all 
-	// 		return false;
-	// 	} 
-	// 	else {
-	// 		return false;
-	// 	}
-	// }
+			//if there's no conflict at all 
+			return false;
+		} 
+		else {
+			return false;
+		}
+	}
 
 	//For scheduling an event with contact by it's name
-	// public boolean scheduleEvent(Event event, String contactName) { 
-	// 	Contact contact = searchName(contactName); //This needs to be changed according to BST
+	public boolean scheduleEvent(Event event, String contactName) { 
+		Contact contact = searchName(contactName); //This needs to be changed according to BST
 
-	// 	if(contact==null) {
-	// 		System.out.println(contactName+" doesn't exists!");
-	// 		return false;
-	// 	}
+		if(contact==null) {
+			System.out.println(contactName+" doesn't exists!");
+			return false;
+		}
 
-	// 	boolean conflict = conflictEvent(event, contactName);
-	// 	if(contact!=null && !conflict) {
-	// 		System.out.println(event.getEventTitle()+" is scheduled with "+contact.getContactName());
+		boolean conflict = conflictEvent(event, contactName);
+		if(contact!=null && !conflict) {
+			System.out.println(event.getEventTitle()+" is scheduled with "+contact.getContactName());
 
-	// 		// //adding new event for the contact
-	// 		// contact.eventsOfContact.addEventSorted(event);
+			// //adding new event for the contact
+			// contact.eventsOfContact.addEventSorted(event);
 
-	// 		//adding new contact for the event
-	// 		// event.contactsEvent.addSorted(contact);
-	// 		// addEvent(event);
-    //         events.addEventSorted(event);
-	// 		return true;
-	// 	}
+			//adding new contact for the event
+			// event.contactsEvent.addSorted(contact);
+			// addEvent(event);
+            events.addEventSorted(event);
+			return true;
+		}
 
-	// 	//if there's a conflict with the events of the contact
-	// 	if(conflictEvent(event, contactName)) {
-	// 		return false;
-	// 	}
-	// 	return false;
-	// }
+		//if there's a conflict with the events of the contact
+		if(conflictEvent(event, contactName)) {
+			return false;
+		}
+		return false;
+	}
 
     public LinkedListADT<Event> getEventsByName(String name) {
         LinkedListADT<Event> list = new LinkedListADT<Event>();
@@ -575,63 +471,62 @@ public class Phonebook {
 				break;
 			}
 				break;
-			// case 3: //deleting contact //NEEDS FIXING
-			// System.out.print("Enter The contact's full name: ");
-			// String fullName = input.nextLine();
-			// deleteByName(fullName);
-			// 	break;
-				//CANNOT DO BEFORE EVENT
-			// case 4: //Schedule an event
-			// 	event.getEventInfo();
-			// 	if(!conflictEvent(event, event.getContactName()) && scheduleEvent(event, event.getContactName())){
-			// 		System.out.println("Event scheduled successfully!\n");
-			// 	} else {
-			// 		System.out.println("Can't schedule this event!\n");
-			// 	}
-			// 	break;
-			// case 5: //Printing event details
-			// 	System.out.println("Enter search criteria: ");
-			// 	System.out.println("1. Contact name");
-			// 	System.out.println("2. Event title\n");
-			// 	System.out.print("Enter your choice: ");
-			// 	userChoice = input.nextInt();
+			case 3: //deleting contact //NEEDS FIXING
+			    System.out.print("Enter The contact's full name: ");
+			    String fullName = input.nextLine();
+			    deleteByName(fullName);
+				break;
+			case 4: //Schedule an event
+				event.getEventInfo();
+				if(!conflictEvent(event, event.getContactName()) && scheduleEvent(event, event.getContactName())){
+					System.out.println("Event scheduled successfully!\n");
+				} else {
+					System.out.println("Can't schedule this event!\n");
+				}
+				break;
+			case 5: //Printing event details
+				System.out.println("Enter search criteria: ");
+				System.out.println("1. Contact name");
+				System.out.println("2. Event title\n");
+				System.out.print("Enter your choice: ");
+				userChoice = input.nextInt();
 
-			// 	if(userChoice == 1) {
-			// 		input.nextLine(); //Fixing input problems
-			// 		System.out.print("Enter the contact's name: ");
-			// 		String name = input.nextLine();
-			// 		if(searchEventByName(name)!=null && getEventsByName(name) != null) { 
-			// 			System.out.println("\nEvents found!");
-			// 			getEventsByName(name).printEventList(); 
-			// 		} else {
-			// 			System.out.println("\nThis Contact doesn't exists\n");
-			// 		}	
-			// 	} else if(userChoice == 2) {
-			// 		input.nextLine();
-			// 		System.out.print("Enter the event title: ");
-			// 		String title = input.nextLine();
-			// 		if(searchEventByTitle(title)!=null){
-			// 			System.out.println("\nEvent found!");
-			// 			printEventList(title);
-			// 		} else {
-			// 			System.out.println("\nThis Event doesn't exists\n");
-			// 		}
-			// 	} else {
-			// 		System.out.println("\ninvalid input!\n");
-			// 	}
-			// 	break;
-			// case 6: //display every contact that has the same name //NEEDS FIXING
-			// System.out.print("Enter first name: ");
-			// String firstName = input.nextLine();
-			// System.out.println("");
+				if(userChoice == 1) {
+					input.nextLine(); //Fixing input problems
+					System.out.print("Enter the contact's name: ");
+					String name = input.nextLine();
+					if(searchEventByName(name)!=null && getEventsByName(name) != null) { 
+						System.out.println("\nEvents found!");
+						getEventsByName(name).printEventList(); 
+					} else {
+						System.out.println("\nThis Contact doesn't exists\n");
+					}	
+				} else if(userChoice == 2) {
+					input.nextLine();
+					System.out.print("Enter the event title: ");
+					String title = input.nextLine();
+					if(searchEventByTitle(title)!=null){
+						System.out.println("\nEvent found!");
+						printEventList(title);
+					} else {
+						System.out.println("\nThis Event doesn't exists\n");
+					}
+				} else {
+					System.out.println("\ninvalid input!\n");
+				}
+				break;
+			case 6: //display every contact that has the same name //NEEDS FIXING
+			System.out.print("Enter first name: ");
+			String firstName = input.nextLine();
+			System.out.println("");
 			
-			// if(printByFirstName(firstName) != null) {
-			// 	printByFirstName(firstName).printList();
-			// }
-			// else {
-			// 	System.out.println(firstName+" doesn't exist in the contact list!\n");
-			// }
-			// 	break;
+			if(searchByFirstName(firstName) != null) {
+				searchByFirstName(firstName).printTree();
+			}
+			else {
+				System.out.println(firstName+" doesn't exist in the contact list!\n");
+			}
+				break;
 			case 7: //display all events alphabetically
 				events.printEventList();
 				break;
@@ -641,4 +536,5 @@ public class Phonebook {
         System.out.println("Goodbye!\n");
     }
  }
+
 

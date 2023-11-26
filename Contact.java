@@ -16,6 +16,11 @@ public class Contact implements Comparable<String>{
         return contactName;
     }
 
+    public String getFirstName(String fullName) {
+      String [] b = (fullName).split("\\s"); //At index 0 we have the firstName
+      return b[0];
+    }
+
     public void setContactName(String contactName) {
         this.contactName = contactName;
     }

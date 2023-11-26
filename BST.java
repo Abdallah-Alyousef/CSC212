@@ -322,46 +322,46 @@ public void printBST() {
   //     return insert(key, data);
   // }
 
-  // private BSTNode<T> remove_aux(int key , BSTNode<T> p , BooleanWrapper flag) {
-  //     BSTNode<T> q , child = null;
-  //     if(p == null) {
-  //       return null;
-  //     }
-  //     if(key < p.key) {
-  //       p.left = remove_aux(key, p.left, flag);
-  //     }
-  //     else if(key > p.key) {
-  //       p.right = remove_aux(key, p.right, flag);
-  //     }
-  //     else {
-  //       flag.set(true);
-  //       if(p.left != null && p.right != null) {
-  //         q = find_min(p.right);
-  //         p.key = q.key;
-  //         p.data = q.data;
-  //         p.right = remove_aux(q.key, p.right, flag);
+  private BSTNode<T> remove_aux(String key , BSTNode<T> p , BooleanWrapper flag) {
+      BSTNode<T> q , child = null;
+      if(p == null) {
+        return null;
+      }
+      if(key.compareTo(p.key) < 0) {
+        p.left = remove_aux(key, p.left, flag);
+      }
+      else if(key.compareTo(p.key) > 0) {
+        p.right = remove_aux(key, p.right, flag);
+      }
+      else {
+        flag.set(true);
+        if(p.left != null && p.right != null) {
+          q = find_min(p.right);
+          p.key = q.key;
+          p.data = q.data;
+          p.right = remove_aux(q.key, p.right, flag);
   
-  //       }
-  //       else {
-  //         if(p.right == null) {
-  //             child = p.left;
-  //         }
-  //         else if(p.left == null) {
-  //             child = p.right;
-  //         }
-  //         return child;
-  //       }
-  //     }
-  //     return p;
-  // }
+        }
+        else {
+          if(p.right == null) {
+              child = p.left;
+          }
+          else if(p.left == null) {
+              child = p.right;
+          }
+          return child;
+        }
+      }
+      return p;
+  }
 
-  // public boolean remove_key(int tkey) {
-  //     BooleanWrapper removed = new BooleanWrapper(false);
-  //     BSTNode<T> p;
-  //     p = remove_aux(tkey , root , removed);
-  //     current = root = p;
-  //     return removed.get();
-  // }
+  public boolean remove_key(String tkey) {
+      BooleanWrapper removed = new BooleanWrapper(false);
+      BSTNode<T> p;
+      p = remove_aux(tkey , root , removed);
+      current = root = p;
+      return removed.get();
+  }
 
   public int compareTo(String c) {
 		return contactName.compareTo(c);
