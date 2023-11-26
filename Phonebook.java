@@ -32,20 +32,45 @@ public class Phonebook {
         if(contacts.empty()) {
             return false;
         }
-        if(contacts.findKey(c.getContactName()) || contacts.findKey(c.getPhoneNumber())) {
+        if(contacts.findKey(c.getContactName()) && contacts.findKey(c.getPhoneNumber())) {
             return true;
         }
         return false;
     }
     //This method will search a contact by its name
+    // public Contact searchName(String name) {
+    //     if(contacts.empty()) {
+    //         return null;
+    //     }
+    //     if(contacts.findKey(name)) {
+    //         return contacts.retrieve();
+    //     }
+    //     return null;
+    // }
+
+    //This method will search a contact by its name
     public Contact searchName(String name) {
-        if(contacts.empty()) {
+        if (contacts.empty()) {
             return null;
         }
-        if(contacts.findKey(name)) {
-            return contacts.retrieve();
+    
+        return searchNameRecursive(contacts.findRoot(), name);
+    }
+    
+    private Contact searchNameRecursive(BSTNode<Contact>node, String name) {
+        if (node == null) {
+            return null;
         }
-        return null;
+    
+        int comparison = node.data.getContactName().compareToIgnoreCase(name);
+    
+        if (comparison == 0) {
+            return node.data;
+        } else if (comparison > 0) {
+            return searchNameRecursive(node.left, name);
+        } else {
+            return searchNameRecursive(node.right, name);
+        }
     }
 
     //this method will search for a contact by phone number
@@ -146,81 +171,102 @@ public class Phonebook {
 	// 	}
 	// }
 
-    public BST<Contact> searchByEmail(String email) {
-        BST<Contact> tmp = new BST<Contact>();
+    // public BST<Contact> searchByEmail(String email) {
+    //     BST<Contact> tmp = new BST<Contact>();
 
-        if(contacts.empty()) {
+    //     if(contacts.empty()) {
+    //         return null;
+    //     }
+
+    //     if(contacts.retrieve().getEmailAddress().equalsIgnoreCase(email)) {
+    //         tmp.insert(contacts.retrieve().getContactName(), contacts.retrieve()); 
+    //     } 
+    
+    //     return tmp;
+    // }
+
+    public BST<Contact> searchByEmail(String email) {
+        BST<Contact> tmp = new BST<>();
+    
+        if (contacts.empty()) {
+            return null;
+        }
+        else 
+        searchByEmailRecursive(contacts.root, email, tmp);
+    
+        if(tmp.empty()) {
             return null;
         }
 
-        while(contacts.traverseBST()) {
-            if(contacts.findEmailAddress(email)) {
-                tmp.insert(contacts.retrieve().getContactName(), contacts.retrieve()); 
-            } 
+        return tmp;
+    }
+    
+    private void searchByEmailRecursive(BSTNode<Contact> node, String email, BST<Contact> tmp) {
+        if (node != null) {
+            searchByEmailRecursive(node.left, email, tmp);
+    
+            if (node.data.getEmailAddress().equalsIgnoreCase(email)) {
+                tmp.insert(node.data.getContactName(), node.data);
+            }
+    
+            searchByEmailRecursive(node.right, email, tmp);
         }
-         
-        
-        
+    }
+
+    public BST<Contact> searchByBirthday(String Bday) {
+        BST<Contact> tmp = new BST<>();
+    
+        if (contacts.empty()) {
+            return null;
+        }
+        else 
+        searchByBirthdayRecursive(contacts.findRoot(), Bday, tmp);
+    
+        if(tmp.empty()) {
+            return null;
+        }
         
         return tmp;
     }
+    
+    private void searchByBirthdayRecursive(BSTNode<Contact> node, String Bday, BST<Contact> tmp) {
+        if (node != null) {
+            searchByBirthdayRecursive(node.left, Bday, tmp);
+    
+            if (node.data.getBirthday().equalsIgnoreCase(Bday)) {
+                tmp.insert(node.data.getContactName(), node.data);
+            }
+    
+            searchByBirthdayRecursive(node.right, Bday, tmp);
+        }
+    }
 
-	//This will return a linked list that contains contact with the same email we want to search of
-	// public LinkedListADT<Contact> searchByEmail(String email) {
-	// 	LinkedListADT<Contact> tmp = new LinkedListADT<Contact>();
-
-	// 	if(contacts.empty()) {
-	// 		return null;
-	// 	}
-	// 	contacts.findFirst();
-
-	// 	//Go through the List "except the last one" and insert any contact that has the same email that selected
-	// 	while(!contacts.last()) {
-	// 		if(contacts.retrieve().getEmailAddress().equalsIgnoreCase(email)) {
-	// 			tmp.addSorted(contacts.retrieve());
-	// 		}
-	// 		contacts.findNext();
-	// 	}
-
-	// 	//Will check the last one's email
-	// 	if(contacts.retrieve().getEmailAddress().equalsIgnoreCase(email)) {
-	// 		tmp.addSorted(contacts.retrieve());
-	// 	}
-
-	// 	//if we don't find any contact has the email
-	// 	if(tmp.empty()) {
-	// 		return null;
-	// 	}
-	// 	return tmp;
-	// }
-
-	//This will return a linked list that contains contact with the same birthday we want to search of
-	// public LinkedListADT<Contact> searchByBirthday(String Bday) {
-	// 	LinkedListADT<Contact> tmp = new LinkedListADT<Contact>();
-
-	// 	if(contacts.empty()) {
-	// 		return null;
-	// 	}
-	// 	contacts.findFirst();
-
-	// 	//Go through the List "except the last one" and insert any contact that has the same birthday that selected
-	// 	while(!contacts.last()) {
-	// 		if(contacts.retrieve().getBirthday().equalsIgnoreCase(Bday)) {
-	// 			tmp.addSorted(contacts.retrieve());
-	// 		}
-	// 		contacts.findNext();
-	// 	}
-	// 	//Will check the last one's birthday
-	// 	if(contacts.retrieve().getBirthday().equalsIgnoreCase(Bday)) {
-	// 		tmp.addSorted(contacts.retrieve());
-	// 	}
-		
-	// 	//if we don't find any contact has the birthday
-	// 	if(tmp.empty()) {
-	// 		return null;
-	// 	}
-	// 	return tmp;
-	// }
+    public BST<Contact> searchByAddress(String address) {
+        BST<Contact> tmp = new BST<>();
+    
+        if (contacts.empty()) {
+            return null;
+        }
+        else 
+        searchByAddressRecursive(contacts.root, address, tmp);
+    
+        if(tmp.empty()) {
+            return null;
+        }
+        return tmp;
+    }
+    
+    private void searchByAddressRecursive(BSTNode<Contact> node, String address, BST<Contact> tmp) {
+        if (node != null) {
+            searchByAddressRecursive(node.left, address, tmp);
+    
+            if (node.data.getAddress().equalsIgnoreCase(address)) {
+                tmp.insert(node.data.getContactName(), node.data);
+            }
+    
+            searchByAddressRecursive(node.right, address, tmp);
+        }
+    }
 
 	//This will return a linked list that contains contact with the same address we want to search of
 	// public LinkedListADT<Contact> searchByAddress(String address) {
@@ -322,67 +368,67 @@ public class Phonebook {
 	}
 
 	//for checking if there's a conflict between events or not
-	public boolean conflictEvent(Event event, String name) {
-		Contact contact = searchName(name);
+	// public boolean conflictEvent(Event event, String name) {
+	// 	Contact contact = searchName(name);
 
-		//To check if the contact exists 
-		if(contact != null) {
-			// LinkedListADT<Event> eventsContact = contact.get();
-			if(events.empty()) {
-				return false; //There's no events for this contact, so there's no conflict
-			}
-			events.findFirst();
+	// 	//To check if the contact exists 
+	// 	if(contact != null) {
+	// 		// LinkedListADT<Event> eventsContact = contact.get();
+	// 		if(events.empty()) {
+	// 			return false; //There's no events for this contact, so there's no conflict
+	// 		}
+	// 		events.findFirst();
 
-			//going through tha events and check the date and time of each one
-			while(!events.last()) {
-				if(event.getDate().equalsIgnoreCase(events.retrieve().getDate()) && event.getTime().equalsIgnoreCase(events.retrieve().getTime()) && event.getEventTitle().equalsIgnoreCase(events.retrieve().getEventTitle())) {
-					return true; //conflict found!
-				}
-				events.findNext();
-			}
+	// 		//going through tha events and check the date and time of each one
+	// 		while(!events.last()) {
+	// 			if(event.getDate().equalsIgnoreCase(events.retrieve().getDate()) && event.getTime().equalsIgnoreCase(events.retrieve().getTime()) && event.getEventTitle().equalsIgnoreCase(events.retrieve().getEventTitle())) {
+	// 				return true; //conflict found!
+	// 			}
+	// 			events.findNext();
+	// 		}
 
-			//for the last one
-			if(event.getDate().equalsIgnoreCase(events.retrieve().getDate()) && event.getTime().equalsIgnoreCase(events.retrieve().getTime()) && event.getEventTitle().equalsIgnoreCase(events.retrieve().getEventTitle())) {
-				return true; //conflict found!
-			}
+	// 		//for the last one
+	// 		if(event.getDate().equalsIgnoreCase(events.retrieve().getDate()) && event.getTime().equalsIgnoreCase(events.retrieve().getTime()) && event.getEventTitle().equalsIgnoreCase(events.retrieve().getEventTitle())) {
+	// 			return true; //conflict found!
+	// 		}
 
-			//if there's no conflict at all 
-			return false;
-		} 
-		else {
-			return false;
-		}
-	}
+	// 		//if there's no conflict at all 
+	// 		return false;
+	// 	} 
+	// 	else {
+	// 		return false;
+	// 	}
+	// }
 
 	//For scheduling an event with contact by it's name
-	public boolean scheduleEvent(Event event, String contactName) { 
-		Contact contact = searchName(contactName); //This needs to be changed according to BST
+	// public boolean scheduleEvent(Event event, String contactName) { 
+	// 	Contact contact = searchName(contactName); //This needs to be changed according to BST
 
-		if(contact==null) {
-			System.out.println(contactName+" doesn't exists!");
-			return false;
-		}
+	// 	if(contact==null) {
+	// 		System.out.println(contactName+" doesn't exists!");
+	// 		return false;
+	// 	}
 
-		boolean conflict = conflictEvent(event, contactName);
-		if(contact!=null && !conflict) {
-			System.out.println(event.getEventTitle()+" is scheduled with "+contact.getContactName());
+	// 	boolean conflict = conflictEvent(event, contactName);
+	// 	if(contact!=null && !conflict) {
+	// 		System.out.println(event.getEventTitle()+" is scheduled with "+contact.getContactName());
 
-			// //adding new event for the contact
-			// contact.eventsOfContact.addEventSorted(event);
+	// 		// //adding new event for the contact
+	// 		// contact.eventsOfContact.addEventSorted(event);
 
-			//adding new contact for the event
-			// event.contactsEvent.addSorted(contact);
-			// addEvent(event);
-            events.addEventSorted(event);
-			return true;
-		}
+	// 		//adding new contact for the event
+	// 		// event.contactsEvent.addSorted(contact);
+	// 		// addEvent(event);
+    //         events.addEventSorted(event);
+	// 		return true;
+	// 	}
 
-		//if there's a conflict with the events of the contact
-		if(conflictEvent(event, contactName)) {
-			return false;
-		}
-		return false;
-	}
+	// 	//if there's a conflict with the events of the contact
+	// 	if(conflictEvent(event, contactName)) {
+	// 		return false;
+	// 	}
+	// 	return false;
+	// }
 
     public LinkedListADT<Event> getEventsByName(String name) {
         LinkedListADT<Event> list = new LinkedListADT<Event>();
@@ -491,44 +537,44 @@ public class Phonebook {
 				if(searchByEmail(emailAdress)!=null) {
 						System.out.println("Contacts found!");
 						System.out.println("");
-						searchByEmail(emailAdress).printBST();
+						searchByEmail(emailAdress).printTree();
 				}
 				else {
 					System.out.println("Contact doesn't exist\n");
 				}
 				break;
-				// case 4:
-				// System.out.print("Enter the contact's Address:");
+				case 4:
+				System.out.print("Enter the contact's Address:");
 
-				// input.nextLine(); //Fixes Line problem in console
+				input.nextLine(); //Fixes Line problem in console
 
-				// String address = input.nextLine();
+				String address = input.nextLine();
 
-				// if(searchByAddress(address)!=null) {
-				// 		System.out.println("Contacts found!");
-				// 		System.out.println("");
-				// 		searchByAddress(address).printList();
-				// }
-				// else {
-				// 	System.out.println("Contact doesn't exist\n");
-				// }
-				// break;
-				// case 5:
-				// System.out.print("Enter the contact's Birthday:");
-				// input.nextLine(); //For fixing some problems about nextLine ...
-				// String birthDay = input.next();
+				if(searchByAddress(address)!=null ) {
+						System.out.println("Contacts found!");
+						System.out.println("");
+						searchByAddress(address).printTree();
+				}
+				else {
+					System.out.println("Contact doesn't exist\n");
+				}
+				break;
+				case 5:
+				System.out.print("Enter the contact's Birthday:");
+				input.nextLine(); //For fixing some problems about nextLine ...
+				String birthDay = input.next();
 
-				// if(searchByBirthday(birthDay)!=null) {
-				// 	System.out.println("Contacts found!");
-				// 	System.out.println("");
-				// 	searchByBirthday(birthDay).printList();
-				// }
-				// else {
-				// 	System.out.println("Contact doesn't exist\n");
-				// }
-				// break;
-			// }
-			// 	break;
+				if(searchByBirthday(birthDay)!=null) {
+					System.out.println("Contacts found!");
+					System.out.println("");
+					searchByBirthday(birthDay).printTree();
+				}
+				else {
+					System.out.println("Contact doesn't exist\n");
+				}
+				break;
+			}
+				break;
 			// case 3: //deleting contact //NEEDS FIXING
 			// System.out.print("Enter The contact's full name: ");
 			// String fullName = input.nextLine();
@@ -590,10 +636,9 @@ public class Phonebook {
 				events.printEventList();
 				break;
             }
-            
-            
-        }
-    }while(userChoice != 8);
-    System.out.println("Goodbye!\n");
+        
+        }while(userChoice != 8);
+        System.out.println("Goodbye!\n");
     }
-}
+ }
+

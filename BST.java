@@ -23,20 +23,42 @@ public class BST<T> implements Comparable<T>{
     return current.data;
   }
 
-  // public void printTree() {
-  //   inOrder(root);
-  // }
-  // private void inOrder(BSTNode<T> p) {
-  //   if(p!=null) {
-  //     inOrder(p.right);
-  //     System.out.println(p.data);
-  //     inOrder(p.left);
-  //   }
-  // }
-  // private Contact inOrder(BSTNode<T> p) {
-  //   if(p!=null) {
+  
 
+  public void printTree() {
+    inOrder(root);
+  }
+
+  public void inOrder(BSTNode<T> p) {
+    if(p != null) {
+    inOrder(p.left);
+    System.out.println(p.data);
+    inOrder(p.right); 
+    }
+  }
+  public void inOrderList(BSTNode<T> p) {
+    if(p != null) {
+    inOrder(p.left);
+    inOrder(p.right); 
+    }
+  }
+  public void printList() {
+
+  }
+
+  public void traverseList() {
+    inOrder(root);
+  }
+  // public boolean inOrderTraversal(BSTNode<T> p) {
+  //   if(p == null) {
+  //       return false;
   //   }
+  //   if(p != null) {
+  //     inOrderTraversal(p.left);
+  //     inOrderTraversal(p.right);
+  //     return true;
+  //   }
+  // }
   
 
   public boolean traverseBST() {
@@ -46,8 +68,6 @@ public class BST<T> implements Comparable<T>{
 
     boolean foundLast = traverseLeftSubtree(current.left);  // Recursively traverse left subtree
     if (foundLast) {
-        System.out.print(current.data + " ");  // Process current node
-
         // Check if the current node is the last node in the right subtree
         if (current.right == null) {
             return true;
@@ -67,7 +87,6 @@ private  boolean traverseLeftSubtree(BSTNode<T> node) {
 
     boolean foundLast = traverseLeftSubtree(node.left);  // Recursively traverse left subtree
     if (foundLast) {
-        System.out.print(node.data + " ");  // Process current node
 
         // Check if the current node is the last node in the right subtree
         if (node.right == null) {
@@ -85,7 +104,6 @@ private  boolean traverseRightSubtree(BSTNode<T> node) {
 
     boolean foundLast = traverseLeftSubtree(node.left);  // Recursively traverse left subtree
     if (foundLast) {
-        System.out.print(node.data + " ");  // Process current node
 
         // Check if the current node is the last node in the right subtree
         if (node.right == null) {
@@ -112,7 +130,7 @@ public void printBST() {
       }
 
       current = stack.pop();
-      ((Contact)current.data).printContact();
+      System.out.println(current.data);
       current = current.right;
   }
 }
@@ -120,8 +138,8 @@ public void printBST() {
   
   
 
-  public void findRoot() {
-      current = root;
+  public BSTNode<T> findRoot() {
+      return current = root;
   }
 
   
@@ -371,4 +389,5 @@ public void printBST() {
 //         return search(root.right, data);
 //     }
 // }
+
 }
