@@ -7,7 +7,6 @@ public class Event {
     private String location;
     private String contactName;
     public LinkedListADT<Event> events = new LinkedListADT<Event>();
-    public LinkedListADT<Contact> contactsEvent = new LinkedListADT<Contact>();
 
     Scanner input = new Scanner(System.in);
     
@@ -44,9 +43,6 @@ public class Event {
     public LinkedListADT<Event> getEvents(){
         return events;
     }
-    // public LinkedListADT<Contact> getContactsEvent(){
-    //     return contactsEvent;
-    // }
 
     @Override
     public String toString() {

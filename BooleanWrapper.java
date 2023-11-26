@@ -5,7 +5,6 @@ public class BooleanWrapper {
         this.value = value;
     }
 
-
     public void set(boolean value) {
         this.value = value;
     }

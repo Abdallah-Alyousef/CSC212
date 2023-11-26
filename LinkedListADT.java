@@ -120,35 +120,6 @@ public class LinkedListADT<T>{
 		public String toString(LinkedListADT<T> l) {
 				return (String)l.retrieve();
 		}
-	
-		//Adding contact with sorted
-	 	// public void addSorted(T val){
-		// 	Node<T> p = new Node<T>(val);
-
-		// 	//Checking if the list id empty
-		// 	if(empty()){
-		// 		head = current = p;
-		// 	}
-
-		// 	//if we want to add it at first
-		// 	if(((Contact)val).compareTo((Contact)head.data)<0){
-		// 		p.next = head;
-		// 		head = p;
-		// 		return;
-		// 	}
-
-		// 	//Add the contact at the correct position
-		// 	else{
-		// 		Node<T> q=head, z=null;
-		// 		while(q != null && (((Contact)q.data).compareTo((Contact)val) <= 0)){
-		// 			z=q;
-		// 			q=q.next;
-		// 		}
-		// 		//Adding after finding the correct position
-		// 		z.next = p;
-		// 		p.next = q;
-		// 	}
-		// }
 
 		//Adding event with sorted
 		public void addEventSorted(T val){

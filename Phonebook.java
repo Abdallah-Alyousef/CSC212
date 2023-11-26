@@ -1,11 +1,12 @@
 import java.util.Scanner;
 public class Phonebook {
-	int userChoice = 0;
-	Scanner input = new Scanner(System.in); 
-	// LinkedListADT<Contact>  contacts = new LinkedListADT<Contact>(); NEEDS TO BE BST
-    BST<Contact> contacts = new BST<Contact>();
-	LinkedListADT<Event>  events = new LinkedListADT<Event>();
 
+	Scanner input = new Scanner(System.in); 
+	int userChoice = 0;
+    BST<Contact> contacts = new BST<Contact>();
+	LinkedListADT<Event> events = new LinkedListADT<Event>();
+
+    //For searching for either name or phone
     public boolean searchName_Phone(Contact c) {
         if(contacts.empty()) {
             return false;
@@ -41,7 +42,7 @@ public class Phonebook {
         }
     }
 
-    //this method will search for a contact by phone number
+    //this method will search for a contact by phone number Recursively
     public Contact searchPhoneNumber(String number) {
         if(contacts.empty()) {
             return null;
@@ -53,7 +54,7 @@ public class Phonebook {
         return null;
     }
 
-
+    //BST method to find firstName
     public BST<Contact> searchByFirstName(String firstName) {
         BST<Contact> tmp = new BST<>();
     
@@ -110,6 +111,7 @@ public class Phonebook {
 
 	}
 
+    //Recursive method to search for emails
     public BST<Contact> searchByEmail(String email) {
         BST<Contact> tmp = new BST<>();
     
@@ -117,7 +119,7 @@ public class Phonebook {
             return null;
         }
         else 
-        searchByEmailRecursive(contacts.root, email, tmp);
+        searchByEmailRecursive(contacts.findRoot(), email, tmp);
     
         if(tmp.empty()) {
             return null;
@@ -137,7 +139,7 @@ public class Phonebook {
             searchByEmailRecursive(node.right, email, tmp);
         }
     }
-
+    //Recursive method to search for birthdays
     public BST<Contact> searchByBirthday(String Bday) {
         BST<Contact> tmp = new BST<>();
     
@@ -166,6 +168,7 @@ public class Phonebook {
         }
     }
 
+    //Recursive method to search for addresses
     public BST<Contact> searchByAddress(String address) {
         BST<Contact> tmp = new BST<>();
     
@@ -173,7 +176,7 @@ public class Phonebook {
             return null;
         }
         else 
-        searchByAddressRecursive(contacts.root, address, tmp);
+        searchByAddressRecursive(contacts.findRoot(), address, tmp);
     
         if(tmp.empty()) {
             return null;
@@ -308,13 +311,6 @@ public class Phonebook {
 		boolean conflict = conflictEvent(event, contactName);
 		if(contact!=null && !conflict) {
 			System.out.println(event.getEventTitle()+" is scheduled with "+contact.getContactName());
-
-			// //adding new event for the contact
-			// contact.eventsOfContact.addEventSorted(event);
-
-			//adding new contact for the event
-			// event.contactsEvent.addSorted(contact);
-			// addEvent(event);
             events.addEventSorted(event);
 			return true;
 		}
@@ -382,7 +378,7 @@ public class Phonebook {
 					System.out.println("The contact already added!\n");
 				}
 				break;
-			case 2: //searching and display the citeria menu for searching //NEEDS FIXING
+			case 2: //searching and display the citeria menu for searching
 			System.out.println("Enter search citeria:");
 			System.out.println("1. Name");
 			System.out.println("2. Phone Number");
@@ -397,7 +393,7 @@ public class Phonebook {
 				System.out.println("");
 				System.out.print("Enter the contact's name:");
 
-				input.nextLine(); //For fixing some problrms about nextLine ...
+				input.nextLine(); //For fixing some problems about nextLine ...
 
 				String name = input.nextLine();
 				if(searchName(name)!=null) {
@@ -412,7 +408,7 @@ public class Phonebook {
 				case 2:
 				System.out.print("Enter the contact's Phone Number:");
 
-				input.nextLine(); //For fixing some problrms about nextLine ...
+				input.nextLine(); //For fixing some problems about nextLine ...
 
 				String number = input.nextLine();
 				if(searchPhoneNumber(number)!=null) {
@@ -427,7 +423,7 @@ public class Phonebook {
 				case 3:
 				System.out.print("Enter the contact's Email Address:");
 
-				input.nextLine(); //For fixing some problrms about nextLine ...
+				input.nextLine(); //For fixing some problems about nextLine ...
 
 				String emailAdress = input.nextLine();
 				if(searchByEmail(emailAdress)!=null) {
@@ -471,7 +467,7 @@ public class Phonebook {
 				break;
 			}
 				break;
-			case 3: //deleting contact //NEEDS FIXING
+			case 3: //deleting contact
 			    System.out.print("Enter The contact's full name: ");
 			    String fullName = input.nextLine();
 			    deleteByName(fullName);
@@ -515,7 +511,7 @@ public class Phonebook {
 					System.out.println("\ninvalid input!\n");
 				}
 				break;
-			case 6: //display every contact that has the same name //NEEDS FIXING
+			case 6: //display every contact that has the same name
 			System.out.print("Enter first name: ");
 			String firstName = input.nextLine();
 			System.out.println("");
