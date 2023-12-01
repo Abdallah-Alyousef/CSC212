@@ -97,6 +97,7 @@ public class Phonebook {
     
 		// //This for deleting every event of the contact that you want to delete ..
 		events.findFirst();
+		if(!events.empty()){
 		while(!events.last()) {
 			if(events.retrieve().getContactName().equalsIgnoreCase(name)) {
 				events.deleteCont(events.retrieve());
@@ -108,7 +109,7 @@ public class Phonebook {
 		if(events.retrieve().getContactName().equalsIgnoreCase(name)) {
 				events.deleteCont(events.retrieve());
 			}
-
+		} 
 	}
 
     //Recursive method to search for emails
@@ -350,7 +351,7 @@ public class Phonebook {
 			System.out.println("1. Add a contact");
 			System.out.println("2. Search for a contact");
 			System.out.println("3. Delete a contact");
-			System.out.println("4. Schedule an event");
+			System.out.println("4. Schedule an event \\ appointment");
 			System.out.println("5. Print events details");
 			System.out.println("6. Print contacts by first name");
 			System.out.println("7. Print all events alphabetically");
@@ -472,12 +473,24 @@ public class Phonebook {
 			    String fullName = input.nextLine();
 			    deleteByName(fullName);
 				break;
-			case 4: //Schedule an event
-				event.getEventInfo();
-				if(!conflictEvent(event, event.getContactName()) && scheduleEvent(event, event.getContactName())){
-					System.out.println("Event scheduled successfully!\n");
-				} else {
-					System.out.println("Can't schedule this event!\n");
+			case 4: //Schedule an event or appointment
+				System.out.println("1. Schedule an event");
+				System.out.println("2. make an appointment\n");
+				System.out.print("Enter your choice: ");
+				userChoice = input.nextInt();
+				if(userChoice == 1){
+					event.getEventInfo();
+					if(!conflictEvent(event, event.getContactName()) && scheduleEvent(event, event.getContactName())){
+						System.out.println("Event scheduled successfully!\n");
+					} else {
+						System.out.println("Can't schedule this event!\n");
+					}
+				}else if (userChoice == 2){
+					//Need to be fill !!!!!!!!!!!!!
+
+
+				}else {
+					System.out.println("\ninvalid input!\n");
 				}
 				break;
 			case 5: //Printing event details
