@@ -281,6 +281,39 @@ public class Phonebook {
 
 			//going through tha events and check the date and time of each one
 			while(!events.last()) {
+				if(event.getDate().equalsIgnoreCase(events.retrieve().getDate()) && event.getTime().equalsIgnoreCase(events.retrieve().getTime()) && event.getContactName().equalsIgnoreCase(events.retrieve().getContactName())) {
+					return true; //conflict found!
+				}
+				events.findNext();
+			}
+
+			//for the last one
+			if(event.getDate().equalsIgnoreCase(events.retrieve().getDate()) && event.getTime().equalsIgnoreCase(events.retrieve().getTime()) && event.getContactName().equalsIgnoreCase(events.retrieve().getContactName())){
+				return true; //conflict found!
+			}
+
+			//if there's no conflict at all 
+			return false;
+		} 
+		else {
+			return false;
+		}
+	}
+
+	//for checking if there's a conflict for the appointment or not
+	public boolean conflictAppointment(Event event, String name) {
+		Contact contact = searchName(name);
+
+		//To check if the contact exists 
+		if(contact != null) {
+			// LinkedListADT<Event> eventsContact = contact.get();
+			if(events.empty()) {
+				return false; //There's no events for this contact, so there's no conflict
+			}
+			events.findFirst();
+
+			//going through tha events and check the date and time of each one
+			while(!events.last()) {
 				if(event.getDate().equalsIgnoreCase(events.retrieve().getDate()) && event.getTime().equalsIgnoreCase(events.retrieve().getTime())) {
 					return true; //conflict found!
 				}
@@ -288,7 +321,7 @@ public class Phonebook {
 			}
 
 			//for the last one
-			if(event.getDate().equalsIgnoreCase(events.retrieve().getDate()) && event.getTime().equalsIgnoreCase(events.retrieve().getTime())) {
+			if(event.getDate().equalsIgnoreCase(events.retrieve().getDate()) && event.getTime().equalsIgnoreCase(events.retrieve().getTime())){
 				return true; //conflict found!
 			}
 
@@ -376,7 +409,7 @@ public class Phonebook {
 					System.out.println("");
 					System.out.println("Contact added successfully!\n");
 				}else {
-					System.out.println("The contact already added!\n");
+					System.out.println("\nCan't add contact!\n");
 				}
 				break;
 			case 2: //searching and display the citeria menu for searching
@@ -486,9 +519,12 @@ public class Phonebook {
 						System.out.println("Can't schedule this event!\n");
 					}
 				}else if (userChoice == 2){
-					//Need to be fill !!!!!!!!!!!!!
-
-
+					event.getEventInfo();
+					if(!conflictAppointment(event, event.getContactName()) && scheduleEvent(event, event.getContactName())){
+						System.out.println("Event scheduled successfully!\n");
+					} else {
+						System.out.println("Can't schedule this event!\n");
+					}
 				}else {
 					System.out.println("\ninvalid input!\n");
 				}
