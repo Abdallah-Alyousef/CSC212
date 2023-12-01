@@ -22,24 +22,9 @@ public class Phonebook {
         if (contacts.empty()) {
             return null;
         }
-    
-        return searchNameRecursive(contacts.findRoot(), name);
-    }
-    
-    private Contact searchNameRecursive(BSTNode<Contact>node, String name) {
-        if (node == null) {
-            return null;
-        }
-    
-        int comparison = node.data.getContactName().compareToIgnoreCase(name);
-    
-        if (comparison == 0) {
-            return node.data;
-        } else if (comparison > 0) {
-            return searchNameRecursive(node.left, name);
-        } else {
-            return searchNameRecursive(node.right, name);
-        }
+		if(contacts.findKey(name)){
+		return contacts.retrieve();
+		} return null;
     }
 
     //this method will search for a contact by phone number Recursively

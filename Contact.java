@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Contact implements Comparable<String>{
+public class Contact<T extends Comparable> implements Comparable<T>{
 
     Scanner kb = new Scanner(System.in);
 
@@ -110,5 +110,13 @@ public class Contact implements Comparable<String>{
       System.out.print("Enter any notes for the contact: ");
       setNotes(kb.nextLine());
 	  }
+
+    @Override
+    public int compareTo(T o) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'compareTo'");
+    }
+
+ 
 
 }

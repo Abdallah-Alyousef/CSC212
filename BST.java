@@ -181,11 +181,9 @@ public class BST<T extends Comparable> implements Comparable<T>{
 		return contactName.compareTo(c.contactName);
 	}
 
-
   @Override
   public int compareTo(T o) {
     // TODO Auto-generated method stub
     throw new UnsupportedOperationException("Unimplemented method 'compareTo'");
   }
-
 }
