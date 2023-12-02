@@ -421,7 +421,7 @@ public class Phonebook {
 					searchName(name).printContact();
 				}
 				else {
-					System.out.println("Contact doesn't exist\n");
+					System.out.println("\nContact doesn't exist\n");
 				}
 				break;
 				case 2:
@@ -436,7 +436,7 @@ public class Phonebook {
 						searchPhoneNumber(number).printContact();
 				}
 				else {
-					System.out.println("Contact doesn't exist\n");
+					System.out.println("\nContact doesn't exist\n");
 				}
 				break;
 				case 3:
@@ -446,12 +446,12 @@ public class Phonebook {
 
 				String emailAdress = input.nextLine();
 				if(searchByEmail(emailAdress)!=null) {
-						System.out.println("Contacts found!");
+						System.out.println("\nContacts found!");
 						System.out.println("");
 						searchByEmail(emailAdress).printTree();
 				}
 				else {
-					System.out.println("Contact doesn't exist\n");
+					System.out.println("\nContact doesn't exist\n");
 				}
 				break;
 				case 4:
@@ -462,12 +462,12 @@ public class Phonebook {
 				String address = input.nextLine();
 
 				if(searchByAddress(address)!=null ) {
-						System.out.println("Contacts found!");
+						System.out.println("\nContacts found!");
 						System.out.println("");
 						searchByAddress(address).printTree();
 				}
 				else {
-					System.out.println("Contact doesn't exist\n");
+					System.out.println("\nContact doesn't exist\n");
 				}
 				break;
 				case 5:
@@ -481,7 +481,7 @@ public class Phonebook {
 					searchByBirthday(birthDay).printTree();
 				}
 				else {
-					System.out.println("Contact doesn't exist\n");
+					System.out.println("\nContact doesn't exist\n");
 				}
 				break;
 			}

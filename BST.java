@@ -32,7 +32,7 @@ public class BST<T extends Comparable> implements Comparable<T>{
   public void inOrder(BSTNode<T> p) {
     if(p != null) {
       inOrder(p.left);
-      System.out.println(p.data);
+      ((Contact)p.data).printContact();
       inOrder(p.right); 
     }
   }
