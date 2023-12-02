@@ -74,9 +74,6 @@ public class LinkedListADT<T>{
 	        current = head;
 	    }
 		
-	    public void deleteEvents() {
-			head = current = null;
-		}
 		
 		//For searching for contact then return true if it's there and false if not
 	    public boolean search(T val){

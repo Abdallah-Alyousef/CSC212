@@ -83,11 +83,11 @@ public class Phonebook {
 		// //This for deleting every event of the contact that you want to delete ..
 		events.findFirst();
 		if(!events.empty()){
-		while(!events.last()) {
-			if(events.retrieve().getContactName().equalsIgnoreCase(name)) {
-				events.deleteCont(events.retrieve());
-			}
-			events.findNext();
+			while(!events.last()) {
+				if(events.retrieve().getContactName().equalsIgnoreCase(name)) {
+					events.deleteCont(events.retrieve());
+				}
+				events.findNext();
 		}
 
 		//Checking last one
@@ -125,6 +125,7 @@ public class Phonebook {
             searchByEmailRecursive(node.right, email, tmp);
         }
     }
+
     //Recursive method to search for birthdays
     public BST<Contact> searchByBirthday(String Bday) {
         BST<Contact> tmp = new BST<>();
@@ -258,7 +259,6 @@ public class Phonebook {
 
 		//To check if the contact exists 
 		if(contact != null) {
-			// LinkedListADT<Event> eventsContact = contact.get();
 			if(events.empty()) {
 				return false; //There's no events for this contact, so there's no conflict
 			}

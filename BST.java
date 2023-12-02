@@ -43,7 +43,7 @@ public class BST<T extends Comparable> implements Comparable<T>{
   }
 
   
-  public boolean findPhone(String tkey) {
+  public boolean findPhone(String phoneNum) {
     BSTNode<T> p = root,q = root;
 
     //Cant find a key in a empty tree
@@ -52,15 +52,14 @@ public class BST<T extends Comparable> implements Comparable<T>{
     }
 
     //Q moves 1 step behind P 
-
     while(p != null) {
       q=p;
       //Found the key
-      if(((Contact) p.data).getPhoneNumber().equalsIgnoreCase(tkey)) {
+      if(((Contact) p.data).getPhoneNumber().equalsIgnoreCase(phoneNum)) {
         current = p;
         return true;
       }
-      else if(tkey.compareTo(((Contact) p.data).getPhoneNumber()) < 0) {
+      else if(phoneNum.compareTo(((Contact) p.data).getPhoneNumber()) < 0) {
         p = p.left;
       }
       else {
@@ -80,7 +79,6 @@ public class BST<T extends Comparable> implements Comparable<T>{
     }
 
     //Q moves 1 step behind P 
-
     while(p != null) {
       q=p;
       //Found the key
